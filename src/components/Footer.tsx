@@ -1,8 +1,11 @@
 import { Mail, Phone } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
 
   const links = {
     company: [
@@ -67,7 +70,11 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     to={link.to}
-                    className="text-slate-400 hover:text-white transition-colors text-sm"
+                    className={`text-sm transition-colors ${
+                      isActive(link.to)
+                        ? "text-white font-semibold"
+                        : "text-slate-400 hover:text-white"
+                    }`}
                     onClick={() =>
                       window.scrollTo({ top: 0, behavior: "smooth" })
                     }
@@ -87,7 +94,11 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     to={link.to}
-                    className="text-slate-400 hover:text-white transition-colors text-sm"
+                    className={`text-sm transition-colors ${
+                      isActive(link.to)
+                        ? "text-white font-semibold"
+                        : "text-slate-400 hover:text-white"
+                    }`}
                     onClick={() =>
                       window.scrollTo({ top: 0, behavior: "smooth" })
                     }
