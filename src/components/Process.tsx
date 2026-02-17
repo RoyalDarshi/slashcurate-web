@@ -1,4 +1,12 @@
-import { Lightbulb, FileText, Code, Rocket, BarChart, Users } from "lucide-react";
+import {
+  Lightbulb,
+  FileText,
+  Code,
+  Rocket,
+  BarChart,
+  Users,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Process() {
   const steps = [
@@ -57,7 +65,7 @@ export default function Process() {
       {/* Background decoration */}
       <div className="absolute -top-24 left-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
-      
+
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
@@ -65,7 +73,7 @@ export default function Process() {
             How We Work
           </h2>
           <p className="text-xl text-slate-300 leading-relaxed">
-            A proven process that delivers results—from initial discovery to 
+            A proven process that delivers results—from initial discovery to
             ongoing support and optimization.
           </p>
         </div>
@@ -74,12 +82,12 @@ export default function Process() {
         <div className="relative">
           {/* Connection line */}
           <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500/20 via-cyan-500/20 to-blue-500/20" />
-          
+
           <div className="space-y-12">
             {steps.map((step, i) => {
               const Icon = step.icon;
               const isEven = i % 2 === 0;
-              
+
               return (
                 <div
                   key={i}
@@ -88,7 +96,9 @@ export default function Process() {
                   }`}
                 >
                   {/* Content */}
-                  <div className={`lg:w-1/2 ${isEven ? "lg:pr-12" : "lg:pl-12"}`}>
+                  <div
+                    className={`lg:w-1/2 ${isEven ? "lg:pr-12" : "lg:pl-12"}`}
+                  >
                     <div className="p-8 rounded-2xl bg-white/[0.02] border border-white/10 hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5">
                       {/* Number and icon */}
                       <div className="flex items-center gap-4 mb-4">
@@ -136,15 +146,15 @@ export default function Process() {
             Ready to Get Started?
           </h3>
           <p className="text-slate-300 mb-6 max-w-2xl mx-auto">
-            Let's discuss your project requirements and create a customized plan 
+            Let's discuss your project requirements and create a customized plan
             that fits your timeline and budget.
           </p>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="inline-flex items-center gap-2 px-7 py-4 bg-white text-slate-900 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/20"
           >
             Schedule a Consultation
-          </a>
+          </Link>
         </div>
       </div>
     </section>

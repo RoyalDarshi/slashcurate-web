@@ -8,54 +8,19 @@ import Services from "./pages/Services";
 import CaseStudies from "./pages/CaseStudies";
 import Contact from "./pages/Contact";
 import BackToTop from "./components/BackToTop";
-import PageTransition from "./components/PageTransition";
 
 export default function App() {
   return (
     <Router>
-      <Navigation scrolled />
+      {/* Navigation now manages its own scroll state internally */}
+      <Navigation />
 
       <Routes>
-        <Route
-          path="/"
-          element={
-            <PageTransition>
-              <Home />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <PageTransition>
-              <About />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/services"
-          element={
-            <PageTransition>
-              <Services />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/case-studies"
-          element={
-            <PageTransition>
-              <CaseStudies />
-            </PageTransition>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <PageTransition>
-              <Contact />
-            </PageTransition>
-          }
-        />
+        <Route path="/"             element={<Home />} />
+        <Route path="/about"        element={<About />} />
+        <Route path="/services"     element={<Services />} />
+        <Route path="/case-studies" element={<CaseStudies />} />
+        <Route path="/contact"      element={<Contact />} />
       </Routes>
 
       <Footer />

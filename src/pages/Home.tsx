@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import Hero from "../components/Hero";
 import Testimonials from "../components/Testimonials";
 import FloatingParticles from "../components/FloatingParticles";
@@ -6,30 +5,19 @@ import ThreeBackground from "../components/ThreeBackground";
 
 export default function Home() {
   return (
-    <div className="relative overflow-hidden">
-      {/* Ambient background */}
+    <div style={{ position: "relative", background: "var(--black)" }}>
+      {/* Fixed 3D ambient layer */}
       <ThreeBackground />
-      <FloatingParticles />
 
-      {/* Hero */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
+      {/* Hero — has its own canvas for particle network */}
+      <div style={{ position: "relative", zIndex: 1 }}>
         <Hero />
-      </motion.section>
+      </div>
 
       {/* Testimonials */}
-      <motion.section
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-120px" }}
-        transition={{ duration: 0.7, ease: "easeOut" }}
-        className="mt-24"
-      >
+      <div style={{ position: "relative", zIndex: 1 }}>
         <Testimonials />
-      </motion.section>
+      </div>
     </div>
   );
 }

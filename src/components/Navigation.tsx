@@ -1,24 +1,31 @@
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-interface NavigationProps {
-  scrolled: boolean;
-}
-
-export default function Navigation({ scrolled }: NavigationProps) {
+export default function Navigation() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => { setOpen(false); }, [location.pathname]);
+
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/services", label: "Services" },
-    { path: "/about", label: "About" },
-    { path: "/contact", label: "Contact" },
+    { path: "/",            label: "Home" },
+    { path: "/services",    label: "Services" },
+    { path: "/about",       label: "About" },
+    { path: "/case-studies",label: "Case Studies" },
+    { path: "/contact",     label: "Contact" },
   ];
 
-  const handleNavClick = (path: string) => {
+  const handleNav = (path: string) => {
     navigate(path);
     setOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -26,95 +33,134 @@ export default function Navigation({ scrolled }: NavigationProps) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-slate-950/80 backdrop-blur-xl border-b border-white/10 shadow-lg"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
+      style={{
+        background: scrolled
+          ? "rgba(5,5,8,0.85)"
+          : "transparent",
+        backdropFilter: scrolled ? "blur(24px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+        boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.4)" : "none",
+      }}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="h-20 flex items-center justify-between">
+
           {/* Logo */}
           <button
-            onClick={() => handleNavClick("/")}
-            className="text-xl font-bold text-white hover:opacity-80 transition-opacity"
+            onClick={() => handleNav("/")}
+            className="flex items-center gap-2 group"
+            style={{ background: "none", border: "none", cursor: "pointer" }}
           >
-            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            {/* Logo mark */}
+            <div
+              className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold transition-all duration-300 group-hover:scale-110"
+              style={{
+                background: "linear-gradient(135deg, #2563eb, #06d6a0)",
+                fontFamily: "var(--font-display)",
+                color: "#fff",
+              }}
+            >
+              SC
+            </div>
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "1.05rem",
+                letterSpacing: "-0.02em",
+                color: "#f1f5f9",
+              }}
+            >
               SlashCurate
             </span>
           </button>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <button
                 key={item.path}
-                onClick={() => handleNavClick(item.path)}
-                className={`text-sm font-medium transition-colors relative group ${
-                  location.pathname === item.path
-                    ? "text-white"
-                    : "text-slate-300 hover:text-white"
-                }`}
+                onClick={() => handleNav(item.path)}
+                className={`nav-link ${location.pathname === item.path ? "active" : ""}`}
               >
                 {item.label}
-                <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 transition-all duration-300 ${
-                    location.pathname === item.path
-                      ? "w-full"
-                      : "w-0 group-hover:w-full"
-                  }`}
-                />
               </button>
             ))}
 
             <Link
               to="/contact"
-              onClick={() => setOpen(false)}
-              className="px-5 py-2.5 bg-white text-slate-900 rounded-lg text-sm font-semibold hover:bg-blue-50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20"
+              className="btn-primary"
+              style={{ fontSize: "0.85rem", padding: "10px 22px" }}
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             >
               Get Started
             </Link>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-white hover:bg-white/10 rounded-lg transition-colors"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg transition-colors duration-200"
+            style={{
+              color: "#f1f5f9",
+              background: open ? "rgba(255,255,255,0.1)" : "transparent",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
             aria-label="Toggle menu"
           >
-            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {open
+              ? <X className="w-5 h-5" />
+              : <Menu className="w-5 h-5" />
+            }
           </button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {open && (
-        <div className="md:hidden bg-slate-950/95 backdrop-blur-xl border-t border-white/10">
-          <div className="px-6 py-4 space-y-1">
-            {navItems.map((item) => (
-              <button
-                key={item.path}
-                onClick={() => handleNavClick(item.path)}
-                className={`block w-full text-left px-4 py-3 rounded-lg transition-all ${
-                  location.pathname === item.path
-                    ? "text-white bg-white/10"
-                    : "text-slate-300 hover:text-white hover:bg-white/5"
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-
-            <Link
-              to="/contact"
-              onClick={() => setOpen(false)}
-              className="block w-full text-center px-4 py-3 bg-white text-slate-900 rounded-lg font-semibold hover:bg-blue-50 transition-colors mt-4"
+      {/* Mobile Drawer */}
+      <div
+        className="md:hidden transition-all duration-400 overflow-hidden"
+        style={{
+          maxHeight: open ? "400px" : "0",
+          opacity: open ? 1 : 0,
+          background: "rgba(5,5,8,0.97)",
+          backdropFilter: "blur(24px)",
+          borderTop: open ? "1px solid rgba(255,255,255,0.06)" : "none",
+          transitionTimingFunction: "cubic-bezier(0.16,1,0.3,1)",
+        }}
+      >
+        <div className="px-6 py-6 flex flex-col gap-1">
+          {navItems.map((item, i) => (
+            <button
+              key={item.path}
+              onClick={() => handleNav(item.path)}
+              className="w-full text-left px-4 py-3 rounded-xl transition-all duration-200"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 600,
+                fontSize: "0.95rem",
+                letterSpacing: "-0.01em",
+                color: location.pathname === item.path ? "#f1f5f9" : "#64748b",
+                background: location.pathname === item.path
+                  ? "rgba(255,255,255,0.06)"
+                  : "transparent",
+                border: "none",
+                cursor: "pointer",
+                animationDelay: `${i * 0.05}s`,
+              }}
             >
-              Get Started
-            </Link>
-          </div>
+              {item.label}
+            </button>
+          ))}
+          <Link
+            to="/contact"
+            onClick={() => setOpen(false)}
+            className="btn-primary mt-4 justify-center"
+          >
+            Get Started
+          </Link>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
