@@ -1,5 +1,6 @@
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface NavigationProps {
   scrolled: boolean;
@@ -7,18 +8,21 @@ interface NavigationProps {
 
 export default function Navigation({ scrolled }: NavigationProps) {
   const [open, setOpen] = useState(false);
-
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    setOpen(false);
-  };
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const navItems = [
-    { id: "home", label: "Home" },
-    { id: "services", label: "Services" },
-    { id: "about", label: "About" },
-    { id: "contact", label: "Contact" },
+    { path: "/", label: "Home" },
+    { path: "/services", label: "Services" },
+    { path: "/about", label: "About" },
+    { path: "/contact", label: "Contact" },
   ];
+
+  const handleNavClick = (path: string) => {
+    navigate(path);
+    setOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <nav
@@ -32,7 +36,7 @@ export default function Navigation({ scrolled }: NavigationProps) {
         <div className="h-20 flex items-center justify-between">
           {/* Logo */}
           <button
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => handleNavClick("/")}
             className="text-xl font-bold text-white hover:opacity-80 transition-opacity"
           >
             <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
@@ -44,21 +48,32 @@ export default function Navigation({ scrolled }: NavigationProps) {
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className="text-sm font-medium text-slate-300 hover:text-white transition-colors relative group"
+                key={item.path}
+                onClick={() => handleNavClick(item.path)}
+                className={`text-sm font-medium transition-colors relative group ${
+                  location.pathname === item.path
+                    ? "text-white"
+                    : "text-slate-300 hover:text-white"
+                }`}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 group-hover:w-full transition-all duration-300" />
+                <span
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-cyan-400 transition-all duration-300 ${
+                    location.pathname === item.path
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }`}
+                />
               </button>
             ))}
 
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
               className="px-5 py-2.5 bg-white text-slate-900 rounded-lg text-sm font-semibold hover:bg-blue-50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20"
             >
               Get Started
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -78,19 +93,25 @@ export default function Navigation({ scrolled }: NavigationProps) {
           <div className="px-6 py-4 space-y-1">
             {navItems.map((item) => (
               <button
-                key={item.id}
-                onClick={() => scrollTo(item.id)}
-                className="block w-full text-left px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-lg transition-all"
+                key={item.path}
+                onClick={() => handleNavClick(item.path)}
+                className={`block w-full text-left px-4 py-3 rounded-lg transition-all ${
+                  location.pathname === item.path
+                    ? "text-white bg-white/10"
+                    : "text-slate-300 hover:text-white hover:bg-white/5"
+                }`}
               >
                 {item.label}
               </button>
             ))}
-            <a
-              href="#contact"
+
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
               className="block w-full text-center px-4 py-3 bg-white text-slate-900 rounded-lg font-semibold hover:bg-blue-50 transition-colors mt-4"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
       )}

@@ -1,4 +1,5 @@
 import { Database, Brain, Cloud, BarChart3, Code2, Briefcase } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Services() {
   const services = [
@@ -55,8 +56,9 @@ export default function Services() {
             What We Build
           </h2>
           <p className="text-xl text-slate-300 leading-relaxed">
-            End-to-end solutions for data platforms, business intelligence, AI systems, 
-            and cloud infrastructure—designed to scale with your business.
+            End-to-end solutions for data platforms, business intelligence, AI
+            systems, and cloud infrastructure—designed to scale with your
+            business.
           </p>
         </div>
 
@@ -103,15 +105,15 @@ export default function Services() {
         {/* Bottom CTA */}
         <div className="mt-16 text-center">
           <p className="text-slate-400 mb-6">
-            Need a custom solution? We work with enterprises to design and build 
+            Need a custom solution? We work with enterprises to design and build
             exactly what they need.
           </p>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 border border-white/10 text-white rounded-xl font-semibold hover:bg-white/10 hover:border-white/20 transition-all"
           >
             Discuss Your Project
-          </a>
+          </Link>
         </div>
       </div>
     </section>
