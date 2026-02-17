@@ -65,7 +65,6 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
   const [v, setV] = useState(false);
   const [hovered, setHovered] = useState(false);
   const Icon = step.icon;
-  // even index (0,2,4) → card on LEFT; odd (1,3,5) → card on RIGHT
   const isRight = index % 2 !== 0;
 
   useEffect(() => {
@@ -109,7 +108,7 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
         overflow: "hidden",
       }}
     >
-      {/* Colored side accent */}
+      {/* Side accent */}
       <div
         style={{
           position: "absolute",
@@ -141,7 +140,7 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
         {step.num}
       </div>
 
-      {/* Icon + badge row */}
+      {/* Icon + badge */}
       <div
         style={{
           display: "flex",
@@ -218,12 +217,11 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
         alignItems: "center",
       }}
     >
-      {/* Left column — card appears here when isRight=false */}
       <div style={{ gridColumn: 1, padding: "0 8px 0 0" }}>
         {!isRight && card}
       </div>
 
-      {/* Center spine dot */}
+      {/* Center dot */}
       <div
         style={{
           gridColumn: 2,
@@ -240,13 +238,12 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
             borderRadius: "50%",
             background: step.color,
             boxShadow: `0 0 0 4px ${step.color}22, 0 0 18px ${step.color}55`,
-            transition: "transform 0.3s, box-shadow 0.3s",
+            transition: "transform 0.3s",
             transform: hovered ? "scale(1.5)" : "scale(1)",
           }}
         />
       </div>
 
-      {/* Right column — card appears here when isRight=true */}
       <div style={{ gridColumn: 3, padding: "0 0 0 8px" }}>
         {isRight && card}
       </div>
@@ -257,6 +254,14 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
 export default function Process() {
   const headerRef = useRef<HTMLDivElement>(null);
   const [hv, setHv] = useState(false);
+  // JS-based breakpoint — avoids Tailwind show/hide double-render issues
+  const [isDesktop, setIsDesktop] = useState(() => window.innerWidth >= 1024);
+
+  useEffect(() => {
+    const onResize = () => setIsDesktop(window.innerWidth >= 1024);
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   useEffect(() => {
     const el = headerRef.current;
@@ -338,129 +343,132 @@ export default function Process() {
           </p>
         </div>
 
-        {/* Desktop zigzag */}
-        <div className="hidden lg:block" style={{ position: "relative" }}>
-          {/* Vertical spine line */}
-          <div
-            style={{
-              position: "absolute",
-              left: "50%",
-              top: 0,
-              bottom: 0,
-              width: 1,
-              background:
-                "linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.45) 8%, rgba(6,214,160,0.35) 50%, rgba(236,72,153,0.45) 92%, transparent 100%)",
-              transform: "translateX(-50%)",
-              pointerEvents: "none",
-            }}
-          />
-          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-            {STEPS.map((s, i) => (
-              <StepCard key={i} step={s} index={i} />
-            ))}
+        {/* ── Desktop: zigzag timeline ── */}
+        {isDesktop && (
+          <div style={{ position: "relative" }}>
+            {/* Spine */}
+            <div
+              style={{
+                position: "absolute",
+                left: "50%",
+                top: 0,
+                bottom: 0,
+                width: 1,
+                background:
+                  "linear-gradient(180deg, transparent 0%, rgba(37,99,235,0.45) 8%, rgba(6,214,160,0.35) 50%, rgba(236,72,153,0.45) 92%, transparent 100%)",
+                transform: "translateX(-50%)",
+                pointerEvents: "none",
+              }}
+            />
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+              {STEPS.map((s, i) => (
+                <StepCard key={i} step={s} index={i} />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
-        {/* Mobile stack */}
-        <div
-          className="lg:hidden"
-          style={{ display: "flex", flexDirection: "column", gap: 12 }}
-        >
-          {STEPS.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <div
-                key={i}
-                style={{
-                  padding: "22px 18px",
-                  background: "var(--surface-2)",
-                  border: "1px solid var(--border)",
-                  borderLeft: `3px solid ${s.color}`,
-                  borderRadius: 14,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 12,
-                }}
-              >
+        {/* ── Mobile: vertical stack ── */}
+        {!isDesktop && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {STEPS.map((s, i) => {
+              const Icon = s.icon;
+              return (
                 <div
+                  key={i}
                   style={{
+                    padding: "22px 18px",
+                    background: "var(--surface-2)",
+                    border: "1px solid var(--border)",
+                    borderLeft: `3px solid ${s.color}`,
+                    borderRadius: 14,
                     display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
+                    flexDirection: "column",
+                    gap: 12,
                   }}
                 >
                   <div
-                    style={{ display: "flex", alignItems: "center", gap: 10 }}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                    }}
                   >
                     <div
-                      style={{
-                        width: 36,
-                        height: 36,
-                        borderRadius: 9,
-                        background: `${s.color}15`,
-                        border: `1px solid ${s.color}30`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
+                      style={{ display: "flex", alignItems: "center", gap: 10 }}
                     >
-                      <Icon style={{ width: 16, height: 16, color: s.color }} />
+                      <div
+                        style={{
+                          width: 36,
+                          height: 36,
+                          borderRadius: 9,
+                          background: `${s.color}15`,
+                          border: `1px solid ${s.color}30`,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Icon
+                          style={{ width: 16, height: 16, color: s.color }}
+                        />
+                      </div>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontWeight: 700,
+                          fontSize: "0.68rem",
+                          color: s.color,
+                          opacity: 0.55,
+                        }}
+                      >
+                        {s.num}
+                      </span>
                     </div>
                     <span
                       style={{
+                        padding: "3px 9px",
+                        borderRadius: 100,
+                        background: `${s.color}10`,
+                        border: `1px solid ${s.color}25`,
                         fontFamily: "var(--font-display)",
-                        fontWeight: 700,
-                        fontSize: "0.68rem",
+                        fontSize: "0.67rem",
+                        fontWeight: 600,
                         color: s.color,
-                        opacity: 0.55,
                       }}
                     >
-                      {s.num}
+                      {s.timeline}
                     </span>
                   </div>
-                  <span
-                    style={{
-                      padding: "3px 9px",
-                      borderRadius: 100,
-                      background: `${s.color}10`,
-                      border: `1px solid ${s.color}25`,
-                      fontFamily: "var(--font-display)",
-                      fontSize: "0.67rem",
-                      fontWeight: 600,
-                      color: s.color,
-                    }}
-                  >
-                    {s.timeline}
-                  </span>
+                  <div>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontWeight: 700,
+                        fontSize: "0.95rem",
+                        color: "var(--text-1)",
+                        marginBottom: 7,
+                      }}
+                    >
+                      {s.title}
+                    </h3>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-body)",
+                        fontWeight: 300,
+                        fontSize: "0.835rem",
+                        color: "var(--text-2)",
+                        lineHeight: 1.7,
+                      }}
+                    >
+                      {s.desc}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <h3
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontWeight: 700,
-                      fontSize: "0.95rem",
-                      color: "var(--text-1)",
-                      marginBottom: 7,
-                    }}
-                  >
-                    {s.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontFamily: "var(--font-body)",
-                      fontWeight: 300,
-                      fontSize: "0.835rem",
-                      color: "var(--text-2)",
-                      lineHeight: 1.7,
-                    }}
-                  >
-                    {s.desc}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
 
         {/* CTA */}
         <div
