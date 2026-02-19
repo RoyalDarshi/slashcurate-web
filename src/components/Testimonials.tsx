@@ -2,41 +2,41 @@ import { useEffect, useRef, useState } from "react";
 
 const TESTIMONIALS = [
   {
-    name:    "Sarah Chen",
-    role:    "CTO",
+    name: "Sarah Chen",
+    role: "CTO",
     company: "TechVentures Inc · Fortune 500 Fintech",
     content:
       "SlashCurate transformed our data infrastructure from a bottleneck into a competitive advantage. Their team delivered a scalable data warehouse that reduced query times by 85% and enabled real-time analytics across the organization.",
     metric: { value: "85%", label: "Faster queries" },
     avatar: "SC",
-    color:  "#2563eb",
+    color: "#2563eb",
   },
   {
-    name:    "Michael Rodriguez",
-    role:    "VP of Engineering",
+    name: "Michael Rodriguez",
+    role: "VP of Engineering",
     company: "RetailCo · E-commerce Platform",
     content:
       "The BI dashboards they built gave us visibility we never had before. Decision-making that used to take days now happens in minutes. Their attention to our specific business needs was exceptional.",
     metric: { value: "10×", label: "Faster decisions" },
     avatar: "MR",
-    color:  "#06d6a0",
+    color: "#06d6a0",
   },
   {
-    name:    "Priya Sharma",
-    role:    "Head of Data",
+    name: "Priya Sharma",
+    role: "Head of Data",
     company: "HealthTech Global · Healthcare Analytics",
     content:
       "We needed a partner who understood both the technical complexity and compliance requirements of healthcare data. SlashCurate delivered a HIPAA-compliant ML platform that's been running flawlessly for 18 months.",
     metric: { value: "18mo", label: "Zero incidents" },
     avatar: "PS",
-    color:  "#7c3aed",
+    color: "#7c3aed",
   },
 ];
 
 const BOTTOM_STATS = [
-  { value: "50+",   label: "Enterprise Clients" },
-  { value: "200+",  label: "Projects Delivered" },
-  { value: "99%",   label: "Client Retention" },
+  { value: "50+", label: "Enterprise Clients" },
+  { value: "200+", label: "Projects Delivered" },
+  { value: "99%", label: "Client Retention" },
   { value: "4.9/5", label: "Average Rating" },
 ];
 
@@ -47,8 +47,13 @@ function useReveal() {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); io.disconnect(); } },
-      { threshold: 0.1 }
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.1 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -60,7 +65,7 @@ function TestimonialCard({
   t,
   index,
 }: {
-  t: typeof TESTIMONIALS[0];
+  t: (typeof TESTIMONIALS)[0];
   index: number;
 }) {
   const { ref, visible } = useReveal();
@@ -84,8 +89,10 @@ function TestimonialCard({
         overflow: "hidden",
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLDivElement).style.borderColor = "rgba(255,255,255,0.12)";
-        (e.currentTarget as HTMLDivElement).style.transform = "translateY(-6px)";
+        (e.currentTarget as HTMLDivElement).style.borderColor =
+          "rgba(255,255,255,0.12)";
+        (e.currentTarget as HTMLDivElement).style.transform =
+          "translateY(-6px)";
         (e.currentTarget as HTMLDivElement).style.boxShadow =
           "0 32px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06)";
       }}
@@ -116,7 +123,7 @@ function TestimonialCard({
           lineHeight: 1,
           color: t.color,
           opacity: 0.15,
-          fontWeight: 700,
+          fontWeight: 800,
           marginTop: "-12px",
           marginBottom: "-16px",
           userSelect: "none",
@@ -129,7 +136,7 @@ function TestimonialCard({
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontWeight: 300,
+          fontWeight: 400,
           fontSize: "0.975rem",
           lineHeight: 1.75,
           color: "var(--text-2)",
@@ -155,7 +162,7 @@ function TestimonialCard({
         <span
           style={{
             fontFamily: "var(--font-display)",
-            fontWeight: 800,
+            fontWeight: 900,
             fontSize: "1.3rem",
             color: t.color,
             letterSpacing: "-0.02em",
@@ -191,7 +198,7 @@ function TestimonialCard({
             alignItems: "center",
             justifyContent: "center",
             fontFamily: "var(--font-display)",
-            fontWeight: 700,
+            fontWeight: 800,
             fontSize: "0.78rem",
             color: "#fff",
             flexShrink: 0,
@@ -203,7 +210,7 @@ function TestimonialCard({
           <div
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 700,
+              fontWeight: 800,
               fontSize: "0.95rem",
               color: "var(--text-1)",
               letterSpacing: "-0.01em",
@@ -235,8 +242,13 @@ export default function Testimonials() {
     const el = headerRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setHeaderVisible(true); io.disconnect(); } },
-      { threshold: 0.1 }
+      ([e]) => {
+        if (e.isIntersecting) {
+          setHeaderVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.1 },
     );
     io.observe(el);
     return () => io.disconnect();
@@ -270,7 +282,8 @@ export default function Testimonials() {
           width: "800px",
           height: "800px",
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)",
+          background:
+            "radial-gradient(circle, rgba(37,99,235,0.05) 0%, transparent 70%)",
           pointerEvents: "none",
         }}
       />
@@ -298,20 +311,19 @@ export default function Testimonials() {
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 800,
+              fontWeight: 900,
               fontSize: "clamp(2rem, 4vw, 3rem)",
               letterSpacing: "-0.04em",
               color: "var(--text-1)",
               marginBottom: "16px",
             }}
           >
-            Trusted by{" "}
-            <span className="gradient-text">Leading Teams</span>
+            Trusted by <span className="gradient-text">Leading Teams</span>
           </h2>
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontWeight: 300,
+              fontWeight: 400,
               fontSize: "1.1rem",
               color: "var(--text-2)",
               lineHeight: 1.7,
@@ -358,10 +370,12 @@ export default function Testimonials() {
                 transition: "background 0.3s",
               }}
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLDivElement).style.background = "var(--surface-2)";
+                (e.currentTarget as HTMLDivElement).style.background =
+                  "var(--surface-2)";
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLDivElement).style.background = "var(--surface-1)";
+                (e.currentTarget as HTMLDivElement).style.background =
+                  "var(--surface-1)";
               }}
             >
               <div

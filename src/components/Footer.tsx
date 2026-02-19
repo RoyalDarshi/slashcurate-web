@@ -3,17 +3,17 @@ import { Link, useLocation } from "react-router-dom";
 
 const LINKS = {
   company: [
-    { name: "Home",         to: "/" },
-    { name: "Services",     to: "/services" },
-    { name: "About",        to: "/about" },
+    { name: "Home", to: "/" },
+    { name: "Services", to: "/services" },
+    { name: "About", to: "/about" },
     { name: "Case Studies", to: "/case-studies" },
-    { name: "Contact",      to: "/contact" },
+    { name: "Contact", to: "/contact" },
   ],
   services: [
-    { name: "BI & Analytics",    to: "/services" },
+    { name: "BI & Analytics", to: "/services" },
     { name: "AI & ML Solutions", to: "/services" },
-    { name: "Data Engineering",  to: "/services" },
-    { name: "Cloud Migration",   to: "/services" },
+    { name: "Data Engineering", to: "/services" },
+    { name: "Cloud Migration", to: "/services" },
   ],
 };
 
@@ -39,7 +39,8 @@ export default function Footer() {
           left: 0,
           right: 0,
           height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(37,99,235,0.4), rgba(6,214,160,0.4), transparent)",
+          background:
+            "linear-gradient(90deg, transparent, rgba(37,99,235,0.4), rgba(6,214,160,0.4), transparent)",
         }}
       />
 
@@ -60,7 +61,14 @@ export default function Footer() {
           {/* Brand column */}
           <div>
             {/* Logo */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                marginBottom: "20px",
+              }}
+            >
               <div
                 style={{
                   width: 36,
@@ -71,7 +79,7 @@ export default function Footer() {
                   alignItems: "center",
                   justifyContent: "center",
                   fontFamily: "var(--font-display)",
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: "0.8rem",
                   color: "#fff",
                 }}
@@ -81,7 +89,7 @@ export default function Footer() {
               <span
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: "1.1rem",
                   letterSpacing: "-0.02em",
                   color: "var(--text-1)",
@@ -94,7 +102,7 @@ export default function Footer() {
             <p
               style={{
                 fontFamily: "var(--font-body)",
-                fontWeight: 300,
+                fontWeight: 400,
                 fontSize: "0.925rem",
                 color: "var(--text-3)",
                 lineHeight: 1.75,
@@ -107,7 +115,9 @@ export default function Footer() {
             </p>
 
             {/* Contact */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div
+              style={{ display: "flex", flexDirection: "column", gap: "12px" }}
+            >
               <a
                 href="mailto:sales@slashcurate.com"
                 style={{
@@ -120,8 +130,14 @@ export default function Footer() {
                   fontFamily: "var(--font-body)",
                   fontSize: "0.875rem",
                 }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-1)")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-3)")}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--text-1)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--text-3)")
+                }
               >
                 <div
                   style={{
@@ -153,8 +169,14 @@ export default function Footer() {
                   fontFamily: "var(--font-body)",
                   fontSize: "0.875rem",
                 }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-1)")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-3)")}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--text-1)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--text-3)")
+                }
               >
                 <div
                   style={{
@@ -181,7 +203,7 @@ export default function Footer() {
             <div
               style={{
                 fontFamily: "var(--font-display)",
-                fontWeight: 700,
+                fontWeight: 800,
                 fontSize: "0.8rem",
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
@@ -191,7 +213,14 @@ export default function Footer() {
             >
               Company
             </div>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
+            <ul
+              style={{
+                listStyle: "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+              }}
+            >
               {LINKS.company.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -199,7 +228,9 @@ export default function Footer() {
                     style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "0.9rem",
-                      color: isActive(link.to) ? "var(--text-1)" : "var(--text-3)",
+                      color: isActive(link.to)
+                        ? "var(--text-1)"
+                        : "var(--text-3)",
                       textDecoration: "none",
                       fontWeight: isActive(link.to) ? 600 : 400,
                       transition: "color 0.2s",
@@ -207,9 +238,17 @@ export default function Footer() {
                       alignItems: "center",
                       gap: "4px",
                     }}
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-1)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = isActive(link.to) ? "var(--text-1)" : "var(--text-3)")}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    onMouseEnter={(e) =>
+                      ((e.currentTarget as HTMLAnchorElement).style.color =
+                        "var(--text-1)")
+                    }
+                    onMouseLeave={(e) =>
+                      ((e.currentTarget as HTMLAnchorElement).style.color =
+                        isActive(link.to) ? "var(--text-1)" : "var(--text-3)")
+                    }
                   >
                     {link.name}
                   </Link>
@@ -223,7 +262,7 @@ export default function Footer() {
             <div
               style={{
                 fontFamily: "var(--font-display)",
-                fontWeight: 700,
+                fontWeight: 800,
                 fontSize: "0.8rem",
                 letterSpacing: "0.08em",
                 textTransform: "uppercase",
@@ -233,7 +272,14 @@ export default function Footer() {
             >
               Services
             </div>
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "12px" }}>
+            <ul
+              style={{
+                listStyle: "none",
+                display: "flex",
+                flexDirection: "column",
+                gap: "12px",
+              }}
+            >
               {LINKS.services.map((link) => (
                 <li key={link.name}>
                   <Link
@@ -245,9 +291,17 @@ export default function Footer() {
                       textDecoration: "none",
                       transition: "color 0.2s",
                     }}
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-1)")}
-                    onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-3)")}
+                    onClick={() =>
+                      window.scrollTo({ top: 0, behavior: "smooth" })
+                    }
+                    onMouseEnter={(e) =>
+                      ((e.currentTarget as HTMLAnchorElement).style.color =
+                        "var(--text-1)")
+                    }
+                    onMouseLeave={(e) =>
+                      ((e.currentTarget as HTMLAnchorElement).style.color =
+                        "var(--text-3)")
+                    }
                   >
                     {link.name}
                   </Link>
@@ -282,7 +336,7 @@ export default function Footer() {
           <div style={{ display: "flex", gap: "28px" }}>
             {[
               { to: "/privacy", label: "Privacy Policy" },
-              { to: "/terms",   label: "Terms of Service" },
+              { to: "/terms", label: "Terms of Service" },
             ].map((l) => (
               <Link
                 key={l.to}
@@ -294,8 +348,14 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.2s",
                 }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-1)")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "var(--text-3)")}
+                onMouseEnter={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--text-1)")
+                }
+                onMouseLeave={(e) =>
+                  ((e.currentTarget as HTMLAnchorElement).style.color =
+                    "var(--text-3)")
+                }
               >
                 {l.label}
               </Link>

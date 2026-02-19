@@ -129,7 +129,7 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
           top: -8,
           right: 14,
           fontFamily: "var(--font-display)",
-          fontWeight: 800,
+          fontWeight: 900,
           fontSize: "4.5rem",
           color: `${step.color}10`,
           lineHeight: 1,
@@ -173,7 +173,7 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
             borderRadius: 100,
             fontFamily: "var(--font-display)",
             fontSize: "0.7rem",
-            fontWeight: 600,
+            fontWeight: 700,
             letterSpacing: "0.03em",
             color: step.color,
           }}
@@ -185,7 +185,7 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
       <h3
         style={{
           fontFamily: "var(--font-display)",
-          fontWeight: 700,
+          fontWeight: 800,
           fontSize: "1rem",
           letterSpacing: "-0.02em",
           color: "var(--text-1)",
@@ -197,7 +197,7 @@ function StepCard({ step, index }: { step: (typeof STEPS)[0]; index: number }) {
       <p
         style={{
           fontFamily: "var(--font-body)",
-          fontWeight: 300,
+          fontWeight: 400,
           fontSize: "0.855rem",
           color: "var(--text-2)",
           lineHeight: 1.7,
@@ -320,7 +320,7 @@ export default function Process() {
           <h2
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 800,
+              fontWeight: 900,
               fontSize: "clamp(2rem, 4vw, 2.8rem)",
               letterSpacing: "-0.04em",
               color: "var(--text-1)",
@@ -332,7 +332,7 @@ export default function Process() {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontWeight: 300,
+              fontWeight: 400,
               fontSize: "1.05rem",
               color: "var(--text-2)",
               lineHeight: 1.7,
@@ -416,7 +416,7 @@ export default function Process() {
                       <span
                         style={{
                           fontFamily: "var(--font-display)",
-                          fontWeight: 700,
+                          fontWeight: 800,
                           fontSize: "0.68rem",
                           color: s.color,
                           opacity: 0.55,
@@ -433,7 +433,7 @@ export default function Process() {
                         border: `1px solid ${s.color}25`,
                         fontFamily: "var(--font-display)",
                         fontSize: "0.67rem",
-                        fontWeight: 600,
+                        fontWeight: 700,
                         color: s.color,
                       }}
                     >
@@ -444,7 +444,7 @@ export default function Process() {
                     <h3
                       style={{
                         fontFamily: "var(--font-display)",
-                        fontWeight: 700,
+                        fontWeight: 800,
                         fontSize: "0.95rem",
                         color: "var(--text-1)",
                         marginBottom: 7,
@@ -455,7 +455,7 @@ export default function Process() {
                     <p
                       style={{
                         fontFamily: "var(--font-body)",
-                        fontWeight: 300,
+                        fontWeight: 400,
                         fontSize: "0.835rem",
                         color: "var(--text-2)",
                         lineHeight: 1.7,
@@ -485,7 +485,7 @@ export default function Process() {
           <h3
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 800,
+              fontWeight: 900,
               fontSize: "clamp(1.5rem, 3vw, 2rem)",
               letterSpacing: "-0.03em",
               color: "var(--text-1)",
@@ -497,7 +497,7 @@ export default function Process() {
           <p
             style={{
               fontFamily: "var(--font-body)",
-              fontWeight: 300,
+              fontWeight: 400,
               fontSize: "1rem",
               color: "var(--text-2)",
               lineHeight: 1.7,

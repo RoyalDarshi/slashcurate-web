@@ -15,14 +15,16 @@ export default function Navigation() {
   }, []);
 
   // Close mobile menu on route change
-  useEffect(() => { setOpen(false); }, [location.pathname]);
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   const navItems = [
-    { path: "/",            label: "Home" },
-    { path: "/services",    label: "Services" },
-    { path: "/about",       label: "About" },
-    { path: "/case-studies",label: "Case Studies" },
-    { path: "/contact",     label: "Contact" },
+    { path: "/", label: "Home" },
+    { path: "/services", label: "Services" },
+    { path: "/about", label: "About" },
+    { path: "/case-studies", label: "Case Studies" },
+    { path: "/contact", label: "Contact" },
   ];
 
   const handleNav = (path: string) => {
@@ -35,17 +37,16 @@ export default function Navigation() {
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
       style={{
-        background: scrolled
-          ? "rgba(5,5,8,0.85)"
-          : "transparent",
+        background: scrolled ? "rgba(5,5,8,0.85)" : "transparent",
         backdropFilter: scrolled ? "blur(24px)" : "none",
-        borderBottom: scrolled ? "1px solid rgba(255,255,255,0.06)" : "1px solid transparent",
+        borderBottom: scrolled
+          ? "1px solid rgba(255,255,255,0.06)"
+          : "1px solid transparent",
         boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.4)" : "none",
       }}
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className="h-20 flex items-center justify-between">
-
           {/* Logo */}
           <button
             onClick={() => handleNav("/")}
@@ -66,7 +67,7 @@ export default function Navigation() {
             <span
               style={{
                 fontFamily: "var(--font-display)",
-                fontWeight: 700,
+                fontWeight: 800,
                 fontSize: "1.05rem",
                 letterSpacing: "-0.02em",
                 color: "#f1f5f9",
@@ -109,10 +110,7 @@ export default function Navigation() {
             }}
             aria-label="Toggle menu"
           >
-            {open
-              ? <X className="w-5 h-5" />
-              : <Menu className="w-5 h-5" />
-            }
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
@@ -137,13 +135,14 @@ export default function Navigation() {
               className="w-full text-left px-4 py-3 rounded-xl transition-all duration-200"
               style={{
                 fontFamily: "var(--font-display)",
-                fontWeight: 600,
+                fontWeight: 700,
                 fontSize: "0.95rem",
                 letterSpacing: "-0.01em",
                 color: location.pathname === item.path ? "#f1f5f9" : "#64748b",
-                background: location.pathname === item.path
-                  ? "rgba(255,255,255,0.06)"
-                  : "transparent",
+                background:
+                  location.pathname === item.path
+                    ? "rgba(255,255,255,0.06)"
+                    : "transparent",
                 border: "none",
                 cursor: "pointer",
                 animationDelay: `${i * 0.05}s`,

@@ -167,17 +167,20 @@ export default function Hero() {
             className="animate-fade-up delay-100"
             style={{
               fontFamily: "var(--font-display)",
-              fontWeight: 800,
-              fontSize: "clamp(2rem, 4.5vw, 3.5rem)",
-              lineHeight: 1.02,
+              fontWeight: 900,
+              fontSize: "clamp(2.5rem, 5.5vw, 4.2rem)",
+              lineHeight: 1.1,
               letterSpacing: "-0.04em",
               color: "#ffffff",
               marginBottom: "28px",
             }}
           >
-            Build Systems <br />
-            <span className="gradient-text-hero glow-text">
-              That Actually Work
+            Build Systems That{" "}
+            <span
+              className="gradient-text-hero glow-text"
+              style={{ fontWeight: 900 }}
+            >
+              Actually Work
             </span>
           </h1>
 
@@ -186,17 +189,17 @@ export default function Hero() {
             className="animate-fade-up delay-200"
             style={{
               fontFamily: "var(--font-body)",
-              fontWeight: 300,
-              fontSize: "clamp(1.05rem, 2vw, 1.25rem)",
-              color: "var(--text-2)",
-              lineHeight: 1.7,
-              maxWidth: "580px",
-              marginBottom: "44px",
+              fontWeight: 400,
+              fontSize: "clamp(1.1rem, 2.2vw, 1.3rem)",
+              color: "rgba(255,255,255,0.75)",
+              lineHeight: 1.65,
+              maxWidth: "620px",
+              marginBottom: "40px",
             }}
           >
             We help enterprises modernize data platforms, implement business
-            intelligence, and build AI-driven systems that scale — without the
-            overhead or the guesswork.
+            intelligence, and build AI-driven systems that scale—without the
+            overhead.
           </p>
 
           {/* CTAs */}
