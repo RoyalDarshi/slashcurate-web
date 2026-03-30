@@ -52,6 +52,44 @@ const QUICK_STATS = [
   { value: "50+", label: "Enterprise Clients" },
 ];
 
+const TEAM = [
+  {
+    name: "Shashi Ranjan Kumar",
+    role: "Chief Executive Officer",
+    image: "./shashi.png",
+    color: "#2563eb",
+    bio: "A visionary business leader with deep expertise in Data & AI and Business Automation, shaping scalable, technology-driven growth for modern organizations. Combines strategic foresight with disciplined execution, leveraging data-driven insights to enhance sales performance and strengthen market positioning.",
+  },
+  {
+    name: "Neeraj Sharma",
+    role: "Head – Legal / HR / Operations",
+    image: "./neeraj.png",
+    color: "#06d6a0",
+    bio: "BITS Pilani, IIMB and Delhi University (Law Faculty) alumnus. Holds multiple patents in database redistribution, data-driven testing, and concurrent data access management, recognized in the US, Japan, and China. Co-author of several textbooks and IBM Redbooks.",
+  },
+  {
+    name: "Vamshi Krishna Vattem",
+    role: "Chief Technical Officer",
+    image: "./vamshi.png",
+    color: "#7c3aed",
+    bio: "Accomplished executive in data management, governance, and cloud analytics with over a decade at IBM. Former Senior Sales Consultant at Oracle and Analyst at Barclays. B.Eng. in Electronics & Communications from the University of Wolverhampton.",
+  },
+  {
+    name: "Ashutosh Kumar Pathak",
+    role: "Sales Head",
+    image: "./ashutosh.png",
+    color: "#f59e0b",
+    bio: "IT professional excelling in data analytics, AI, and IT infrastructure. Specialises in assessing, consulting, designing, and leading implementation of transformative solutions including data management, AI/ML, hybrid cloud, and cyber resiliency.",
+  },
+  {
+    name: "Nitin Gupta",
+    role: "Sales Head – United States",
+    image: "./nitin.png",
+    color: "#ec4899",
+    bio: "Computer Science graduate with three decades of global client experience. Expertise spans program assessment, strategic consulting, and transformation of Data Analytics implementations, with tenures at IBM, Capgemini, and McKinsey & Co.",
+  },
+];
+
 function useReveal() {
   const ref = useRef<HTMLDivElement>(null);
   const [v, setV] = useState(false);
@@ -73,10 +111,171 @@ function useReveal() {
   return { ref, v };
 }
 
+function TeamCard({
+  member,
+  index,
+}: {
+  member: (typeof TEAM)[0];
+  index: number;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [v, setV] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [imgError, setImgError] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setV(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  const initials = member.name
+    .split(" ")
+    .map((n) => n[0])
+    .slice(0, 2)
+    .join("");
+
+  return (
+    <div
+      ref={ref}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered ? "var(--surface-3)" : "var(--surface-2)",
+        border: `1px solid ${hovered ? member.color + "40" : "var(--border)"}`,
+        borderRadius: 20,
+        padding: "28px",
+        transition: "all 0.4s cubic-bezier(0.16,1,0.3,1)",
+        opacity: v ? 1 : 0,
+        transform: v
+          ? hovered
+            ? "translateY(-6px)"
+            : "translateY(0)"
+          : "translateY(28px)",
+        transitionDelay: `${index * 0.08}s`,
+        position: "relative",
+        overflow: "hidden",
+        display: "flex",
+        flexDirection: "column",
+        gap: 20,
+      }}
+    >
+      {/* Top accent bar */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 2,
+          background: `linear-gradient(90deg, ${member.color}, transparent)`,
+          opacity: hovered ? 1 : 0.4,
+          transition: "opacity 0.3s",
+        }}
+      />
+
+      {/* Avatar + name row */}
+      <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+        <div
+          style={{
+            width: 64,
+            height: 64,
+            borderRadius: "50%",
+            flexShrink: 0,
+            border: `2px solid ${member.color}40`,
+            overflow: "hidden",
+            background: `${member.color}15`,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: hovered ? `0 0 16px ${member.color}30` : "none",
+            transition: "box-shadow 0.3s",
+          }}
+        >
+          {!imgError ? (
+            <img
+              src={member.image}
+              alt={member.name}
+              onError={() => setImgError(true)}
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <span
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 800,
+                fontSize: "1.15rem",
+                color: member.color,
+              }}
+            >
+              {initials}
+            </span>
+          )}
+        </div>
+
+        <div>
+          <h4
+            style={{
+              fontFamily: "var(--font-display)",
+              fontWeight: 800,
+              fontSize: "0.95rem",
+              color: "var(--text-1)",
+              marginBottom: 4,
+              letterSpacing: "-0.02em",
+            }}
+          >
+            {member.name}
+          </h4>
+          <span
+            style={{
+              fontFamily: "var(--font-body)",
+              fontWeight: 500,
+              fontSize: "0.775rem",
+              color: member.color,
+              letterSpacing: "0.02em",
+            }}
+          >
+            {member.role}
+          </span>
+        </div>
+      </div>
+
+      {/* Bio */}
+      <p
+        style={{
+          fontFamily: "var(--font-body)",
+          fontWeight: 400,
+          fontSize: "0.835rem",
+          color: "var(--text-2)",
+          lineHeight: 1.7,
+          margin: 0,
+        }}
+      >
+        {member.bio}
+      </p>
+    </div>
+  );
+}
+
 export default function About() {
   const { ref: leftRef, v: leftV } = useReveal();
   const { ref: rightRef, v: rightV } = useReveal();
   const { ref: statsRef, v: statsV } = useReveal();
+  const { ref: teamHeaderRef, v: teamHeaderV } = useReveal();
 
   return (
     <section
@@ -385,6 +584,82 @@ export default function About() {
           </div>
         </div>
 
+        {/* ── Core Team ───────────────────────────────────── */}
+        <div style={{ marginBottom: 80 }}>
+          {/* Team header */}
+          <div
+            ref={teamHeaderRef}
+            style={{
+              textAlign: "center",
+              marginBottom: 56,
+              transition: "all 0.7s cubic-bezier(0.16,1,0.3,1)",
+              opacity: teamHeaderV ? 1 : 0,
+              transform: teamHeaderV ? "none" : "translateY(20px)",
+            }}
+          >
+            <div className="section-line" style={{ margin: "0 auto 20px" }} />
+            <div className="badge" style={{ marginBottom: 16 }}>
+              The People Behind It
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 900,
+                fontSize: "clamp(1.8rem, 3.5vw, 2.4rem)",
+                letterSpacing: "-0.04em",
+                color: "var(--text-1)",
+                marginBottom: 14,
+              }}
+            >
+              Our <span className="gradient-text">Core Team</span>
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--font-body)",
+                fontWeight: 400,
+                fontSize: "1rem",
+                color: "var(--text-2)",
+                lineHeight: 1.7,
+                maxWidth: 520,
+                margin: "0 auto",
+              }}
+            >
+              Experienced leaders combining technical depth, business strategy,
+              and a client-first mindset.
+            </p>
+          </div>
+
+          {/* Team grid — 3 on top, 2 centred below */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: 16,
+              marginBottom: 16,
+            }}
+            className="team-grid-top"
+          >
+            {TEAM.slice(0, 3).map((member, i) => (
+              <TeamCard key={i} member={member} index={i} />
+            ))}
+          </div>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 16,
+              maxWidth: "66.66%",
+              margin: "0 auto",
+            }}
+            className="team-grid-bottom"
+          >
+            {TEAM.slice(3).map((member, i) => (
+              <TeamCard key={i} member={member} index={i + 3} />
+            ))}
+          </div>
+        </div>
+
         {/* Stats row */}
         <div
           ref={statsRef}
@@ -443,6 +718,11 @@ export default function About() {
       <style>{`
         @media (max-width: 1023px) {
           .about-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          .team-grid-top { grid-template-columns: 1fr !important; }
+          .team-grid-bottom { grid-template-columns: 1fr !important; max-width: 100% !important; }
+        }
+        @media (min-width: 1024px) and (max-width: 1279px) {
+          .team-grid-bottom { max-width: 70% !important; }
         }
       `}</style>
     </section>
